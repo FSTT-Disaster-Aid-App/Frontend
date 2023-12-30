@@ -1,8 +1,8 @@
-<div class="hero min-h-screen bg-base-200">
+<div class="hero min-h-screen bg-base-100">
   <div class="hero-content flex-col md:w-2/4 lg:flex-row-reverse">
     <div class="text-center lg:text-left">
-      <h1 class="text-5xl font-bold">Login now!</h1>
-      <p class="py-6">Welcome!</p>
+      <h1 class="text-5xl font-bold text-neutral">Login now!</h1>
+      <p class="py-6 text-neutral">Welcome!</p>
     </div>
     <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
       <form
@@ -12,7 +12,7 @@
       >
         <div class="form-control">
           <label class="label" for="email">
-            <span class="label-text">Email</span>
+            <span class="label-text text-neutral">Email</span>
           </label>
           <input
             type="text"
@@ -39,7 +39,7 @@
         </div>
         <div class="form-control">
           <label class="label" for="password">
-            <span class="label-text">Password</span>
+            <span class="label-text text-neutral">Password</span>
           </label>
           <input
             type="password"
@@ -62,8 +62,10 @@
           </div>
         </div>
         <div class="form-control flex gap-2">
-          <button class="btn btn-primary" type="submit">Login</button>
-          <a routerLink="/signup" class="btn btn-primary">SignUp</a>
+          <button class="btn btn-primary text-white" type="submit">
+            Login
+          </button>
+          <a routerLink="/signup" class="btn btn-primary text-white">SignUp</a>
         </div>
       </form>
     </div>

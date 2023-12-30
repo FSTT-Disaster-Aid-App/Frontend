@@ -13,6 +13,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeroComponent } from './hero/hero.component';
 import { IntroSectionComponent } from './intro-section/intro-section.component';
 import { FeaturedContentComponent } from './featured-content/featured-content.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { FeaturedContentComponent } from './featured-content/featured-content.co
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

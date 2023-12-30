@@ -1,8 +1,8 @@
-<div class="hero min-h-screen bg-base-200">
+<div class="hero min-h-screen bg-base-100">
   <div class="hero-content flex-col md:w-2/4 lg:flex-row-reverse">
     <div class="text-center lg:text-left">
-      <h1 class="text-5xl font-bold">Sign Up now!</h1>
-      <p class="py-6">Join!</p>
+      <h1 class="text-5xl font-bold text-neutral">Sign Up now!</h1>
+      <p class="py-6 text-neutral">Join!</p>
     </div>
     <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
       <form
@@ -12,7 +12,7 @@
       >
         <div class="form-control">
           <label class="label" for="name">
-            <span class="label-text">Name</span>
+            <span class="label-text text-neutral">Name</span>
           </label>
           <input
             placeholder="Name"
@@ -38,7 +38,7 @@
         </div>
         <div class="form-control">
           <label class="label" for="email">
-            <span class="label-text">Email</span>
+            <span class="label-text text-neutral">Email</span>
           </label>
           <input
             type="email"
@@ -66,7 +66,7 @@
         </div>
         <div class="form-control">
           <label class="label" for="password">
-            <span class="label-text">Password</span>
+            <span class="label-text text-neutral">Password</span>
           </label>
           <input
             type="password"
@@ -95,7 +95,7 @@
 
         <div class="form-control">
           <label class="label" for="confirm_password">
-            <span class="label-text">Confirm Password</span>
+            <span class="label-text text-neutral">Confirm Password</span>
           </label>
           <input
             type="password"
@@ -123,8 +123,10 @@
           </div>
         </div>
         <div class="form-control flex gap-2">
-          <button class="btn btn-primary" type="submit">Sign Up</button>
-          <a routerLink="/login" class="btn btn-primary">Login</a>
+          <button class="btn btn-primary text-white" type="submit">
+            Sign Up
+          </button>
+          <a routerLink="/login" class="btn btn-primary text-white">Login</a>
         </div>
       </form>
     </div>

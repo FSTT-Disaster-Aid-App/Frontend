@@ -6,6 +6,7 @@ module.exports = {
         "text-base": "#231F20",
         "text-secondary": "#646464",
         "shape-bg": "#6FB1FC",
+        "bg-secondary": "#EDF1FC",
       },
     },
   },

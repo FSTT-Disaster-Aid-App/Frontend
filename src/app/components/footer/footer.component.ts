@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 
 import { faHouseCrack } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFacebookF,
+  faTwitter,
+  faInstagram,
+} from '@fortawesome/free-brands-svg-icons';
 
 import {
   faPhone,
@@ -17,4 +22,7 @@ export class FooterComponent {
   faPhone = faPhone;
   faMessage = faMessage;
   faLocationDot = faLocationDot;
+  faFacebook = faFacebookF;
+  faTwitter = faTwitter;
+  faInstagram = faInstagram;
 }

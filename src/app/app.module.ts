@@ -13,7 +13,7 @@ import { HeroComponent } from './components/hero/hero.component';
 import { IntroSectionComponent } from './components/intro-section/intro-section.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LineSeparatorComponent } from './components/line-separator/line-separator.component';
+import { ContactComponent } from './components/contact/contact.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { LineSeparatorComponent } from './components/line-separator/line-separat
     HeroComponent,
     IntroSectionComponent,
     FeaturedContentComponent,
-    LineSeparatorComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

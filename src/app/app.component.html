@@ -11,6 +11,12 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<app-nav-bar />
+<ng-container *ngIf="notLogInOrSignUp()">
+  <app-nav-bar />
+</ng-container>
+
 <router-outlet></router-outlet>
-<app-footer />
+
+<ng-container *ngIf="notLogInOrSignUp()">
+  <app-footer />
+</ng-container>

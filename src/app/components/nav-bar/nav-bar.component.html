@@ -23,25 +23,35 @@
           </svg>
         </label>
       </div>
-      <div class="flex-1 px-2 mx-2">
+      <a href="/" class="flex-1 px-2 mx-2">
         <fa-icon
           class="text-3xl text-primary pr-3"
           [icon]="faHouseCrack"
         ></fa-icon>
-        <h1 class="text-xl">Disaster Aid</h1>
-      </div>
+        <h1 class="text-xl hover:text-primary-focus">Disaster Aid</h1>
+      </a>
       <div class="flex-none hidden lg:block">
-        <ul class="menu menu-horizontal">
+        <ul class="menu menu-horizontal font-bold">
           <li>
             <a
+              href="/victim"
               class="hover:border-primary hover:text-primary hover:bg-transparent hover:scale-105 transition-transform"
-              >Navbar Item 1</a
+              >Victim</a
             >
           </li>
           <li>
             <a
+              href="/volunteer"
               class="hover:border-primary hover:text-primary hover:bg-transparent hover:scale-105 transition-transform"
-              >Navbar Item 2</a
+              >Volunteer</a
+            >
+          </li>
+
+          <li>
+            <a
+              href="/about"
+              class="hover:border-primary hover:text-primary hover:bg-transparent hover:scale-105 transition-transform"
+              >About</a
             >
           </li>
         </ul>

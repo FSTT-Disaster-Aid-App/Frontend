@@ -45,17 +45,18 @@ export class AuthGuardService {
   }
 
   private isAuthenticated(): Observable<boolean> {
-    const authToken = localStorage.getItem('token');
-
-    if (!authToken) {
-      return of(false);
-    }
-
-    return this.http
-      .get<Response>('http://localhost:8080/auth/validate?token=' + authToken)
-      .pipe(
-        map((response) => response.status === 'success'),
-        catchError(() => of(true)),
-      );
+    return of(true);
+    //   const authToken = localStorage.getItem('token');
+    //
+    //   if (!authToken) {
+    //     return of(false);
+    //   }
+    //
+    //   return this.http
+    //     .get<Response>('http://localhost:8080/auth/validate?token=' + authToken)
+    //     .pipe(
+    //       map((response) => response.status === 'success'),
+    //       catchError(() => of(true)),
+    //     );
   }
 }

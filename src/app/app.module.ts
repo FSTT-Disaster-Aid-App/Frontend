@@ -14,6 +14,11 @@ import { IntroSectionComponent } from './components/intro-section/intro-section.
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ContactComponent } from './components/contact/contact.component';
+import { VictimComponent } from './pages/victim/victim.component';
+import { VolunteerComponent } from './pages/volunteer/volunteer.component';
+import { AboutComponent } from './pages/about/about.component';
+import { SkillsComponent } from './pages/volunteer/skills/skills.component';
+import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/assistance-offers.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +31,11 @@ import { ContactComponent } from './components/contact/contact.component';
     IntroSectionComponent,
     FeaturedContentComponent,
     ContactComponent,
+    VictimComponent,
+    VolunteerComponent,
+    AboutComponent,
+    SkillsComponent,
+    AssistanceOffersComponent,
   ],
   imports: [
     BrowserModule,

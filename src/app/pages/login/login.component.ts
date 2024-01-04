@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 interface Response {
   token: string;
+  userId: string;
 }
 @Component({
   selector: 'app-login',
@@ -29,8 +30,9 @@ export class LoginComponent {
       .post<Response>('http://localhost:8080/auth/token', this.loginForm.value)
       .subscribe({
         next: (res) => {
-          // set token in local storage
+          // set token in local storage and userId
           localStorage.setItem('token', res.token);
+          localStorage.setItem('userId', res.userId);
           // Redirect to the desired route after successful login
           this.router.navigate(['/']);
         },

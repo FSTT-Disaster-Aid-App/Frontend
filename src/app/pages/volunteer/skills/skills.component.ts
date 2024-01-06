@@ -1,17 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+
 interface Skill {
   id?: number;
   name: string;
   userId: string;
 }
+
 @Component({
   selector: 'app-skills',
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss'],
 })
-export class SkillsComponent {
+export class SkillsComponent implements OnInit {
   skills: Skill[] = [];
   newSkillForm!: FormGroup;
   userId: number | undefined;
@@ -32,15 +35,20 @@ export class SkillsComponent {
   }
 
   loadSkills(): void {
+    const gatewayUrl = environment.gatewayUrl;
+
     this.http
-      .get<any[]>(`http://localhost:8080/api/skills/user/${this.userId}`)
+      .get<any[]>(`${gatewayUrl}/api/volunteer/skills/user/${this.userId}`)
       .subscribe((skills) => {
         this.skills = skills;
       });
   }
+
   addSkill(): void {
+    const gatewayUrl = environment.gatewayUrl;
+
     this.http
-      .post('http://localhost:8080/api/skills', this.newSkillForm.value)
+      .post(`${gatewayUrl}/api/volunteer/skills`, this.newSkillForm.value)
       .subscribe({
         next: () => {
           this.loadSkills();
@@ -54,8 +62,10 @@ export class SkillsComponent {
 
   deleteSkill(skillId: number | undefined): void {
     if (skillId) {
+      const gatewayUrl = environment.gatewayUrl;
+
       this.http
-        .delete(`http://localhost:8080/api/skills/${skillId}`)
+        .delete(`${gatewayUrl}/api/volunteer/skills/${skillId}`)
         .subscribe({
           next: () => {
             this.loadSkills();

@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import { environment } from 'src/environments/environment';
+
 import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
@@ -38,6 +41,8 @@ export class AuthGuardService {
         }
       }),
       catchError(() => {
+        // Log the error or show a more user-friendly message
+        console.error('An error occurred during authentication check.');
         this.router.navigate(['/login']);
         return of(false);
       }),
@@ -45,18 +50,25 @@ export class AuthGuardService {
   }
 
   private isAuthenticated(): Observable<boolean> {
+    const gatewayUrl = environment.gatewayUrl;
+    console.log(gatewayUrl);
     return of(true);
-    //   const authToken = localStorage.getItem('token');
+    // const authToken = localStorage.getItem('token');
     //
-    //   if (!authToken) {
-    //     return of(false);
-    //   }
+    // if (!authToken) {
+    //   return of(false);
+    // }
     //
-    //   return this.http
-    //     .get<Response>('http://localhost:8080/auth/validate?token=' + authToken)
-    //     .pipe(
-    //       map((response) => response.status === 'success'),
-    //       catchError(() => of(true)),
-    //     );
+    // // Append the authentication endpoint to the gateway URL
+    // const authEndpoint = `${gatewayUrl}/auth/validate?token=${authToken}`;
+    //
+    // return this.http.get<Response>(authEndpoint).pipe(
+    //   map((response) => response.status === 'success'),
+    //   catchError((error) => {
+    //     // Log the error or show a more user-friendly message
+    //     console.error('An error occurred during authentication check.', error);
+    //     return of(true); // Assume authenticated to prevent blocking the user
+    //   }),
+    // );
   }
 }

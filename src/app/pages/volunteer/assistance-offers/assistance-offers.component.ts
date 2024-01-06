@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
 interface AssistanceOffer {
   id?: string;
   assistanceRequestId: string;
@@ -8,12 +10,13 @@ interface AssistanceOffer {
   dateOfferMade: string;
   dateOfferAcceptedOrRejected: string;
 }
+
 @Component({
   selector: 'app-assistance-offers',
   templateUrl: './assistance-offers.component.html',
   styleUrls: ['./assistance-offers.component.scss'],
 })
-export class AssistanceOffersComponent {
+export class AssistanceOffersComponent implements OnInit {
   assistanceOffers: AssistanceOffer[] = [];
   userId: number | undefined;
 
@@ -29,9 +32,11 @@ export class AssistanceOffersComponent {
   }
 
   loadAssistanceOffers(userId: number): void {
+    const gatewayUrl = environment.gatewayUrl;
+
     this.http
       .get<AssistanceOffer[]>(
-        `http://localhost:8080/api/assistanceoffers/user/${userId}`,
+        `${gatewayUrl}/api/volunteer/assistanceoffers/user/${userId}`,
       )
       .subscribe((assistanceOffers) => {
         this.assistanceOffers = assistanceOffers;

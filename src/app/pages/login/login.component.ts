@@ -2,10 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+import { environment } from 'src/environments/environment';
+
 interface Response {
   token: string;
   userId: string;
 }
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -26,8 +30,10 @@ export class LoginComponent {
   }
 
   loginHandler(): void {
+    const gatewayUrl = environment.gatewayUrl;
+
     this.http
-      .post<Response>('http://localhost:8080/auth/token', this.loginForm.value)
+      .post<Response>(`${gatewayUrl}/auth/token`, this.loginForm.value)
       .subscribe({
         next: (res) => {
           // set token in local storage and userId

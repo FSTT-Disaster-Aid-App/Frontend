@@ -9,6 +9,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -56,8 +58,10 @@ export class SignupComponent implements OnInit {
   }
 
   signupHandler(): void {
+    const gatewayUrl = environment.gatewayUrl;
+
     this.http
-      .post('http://localhost:8080/auth/register', this.signupForm.value)
+      .post(`${gatewayUrl}/auth/register`, this.signupForm.value)
       .subscribe({
         next: () => {
           this.router.navigate(['/login']);

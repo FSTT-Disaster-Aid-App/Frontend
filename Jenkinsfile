@@ -11,7 +11,7 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/FSTT-Disaster-Aid-App/Frontend'
+        git 'https://github.com/FSTT-Disaster-Aid-App/Frontend.git'
       }
     }
 

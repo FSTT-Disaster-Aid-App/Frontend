@@ -1,1 +1,25 @@
-<p>victim works!</p>
+<div class="flex flex-col space-y-4">
+  <div class="text-center text-xl font-bold">Your Assistant Requests</div>
+
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div *ngFor="let offer of assistanceRequests" class="card w-full bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h1 class="text-xl"><span class="font-bold text-black">Description:</span></h1>
+          <p class="card-title text-sm">{{ offer.description }}</p>
+
+          <p class="card-title text-xl mb-2"><span class="font-bold text-black">State:</span><span class="text-green-500">{{ offer.state }}</span></p>
+
+          <!-- Boutons "Delete" et "See More" dans la même ligne -->
+          <div class="flex items-center space-x-4">
+            <!-- Bouton Delete -->
+            <button class="flex-shrink-0 bg-red-600 text-white rounded p-2 text-sm hover:bg-red-500" (click)="deleteIte(offer?.id)">Delete</button>
+
+            <!-- Bouton See More avec la classe shape-bg -->
+            <button class="flex-shrink-0 shape-bg bg-blue-400 text-white rounded p-2 text-sm hover:bg-indigo-700">See More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

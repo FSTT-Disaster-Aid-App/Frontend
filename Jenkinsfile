@@ -39,7 +39,7 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "angular-app.yaml", kubeconfigId: "kubernetes")
+          sh 'kubectl apply -f angular-app.yaml'
         }
       }
     }

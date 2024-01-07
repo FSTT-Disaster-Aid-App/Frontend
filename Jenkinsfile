@@ -39,7 +39,7 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          sh 'kubectl apply -f angular-app.yaml'
+          sh 'kubectl apply -f deploy-service.yaml'
         }
       }
     }

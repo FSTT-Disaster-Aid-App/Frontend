@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-deployment
+  name: angluar-app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: demo-app
+      app: angluar-app
   template:
     metadata:
       labels:
-        app: demo-app
+        app: angluar-app
     spec:
       containers:
-        - name: demo-deployment-container
+        - name: angluar-app-deployment-container
           image: ayga/angluar-app:latest
           ports:
             - containerPort: 3000
@@ -30,17 +30,17 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: demo-app
-  name: demo-service
+    app: angluar-app
+  name: angluar-app-service
 spec:
   type: ClusterIP
   ports:
-    - name: demo-service-port
+    - name: angluar-app-service-port
       port: 80
       targetPort: 80
       protocol: TCP
   selector:
-    app: demo-app
+    app: angluar-app
 
 ---
 # External NodePort Service
@@ -48,15 +48,15 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: demo-app
-  name: demo-nodeport
+    app: angluar-app
+  name: angluar-app-nodeport
 spec:
   type: NodePort
   ports:
-    - name: demo-service-port
+    - name: angluar-app-service-port
       port: 80
       targetPort: 80
       nodePort: 30001 # You can specify a different nodePort if needed
       protocol: TCP
   selector:
-    app: demo-app
+    app: angluar-app

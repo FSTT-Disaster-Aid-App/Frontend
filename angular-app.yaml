@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: angular-app-container
-          image: your-registry/your-angular-app-image:latest
+          image: ayga/angular-app:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80

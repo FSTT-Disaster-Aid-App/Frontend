@@ -1,27 +1,15 @@
-# ----------------------------
-# build from source
-# ----------------------------
-FROM node:20 AS build
-
+# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
+FROM node:20.8.0 as build-stage
 WORKDIR /app
-
-COPY package*.json .
+COPY package*.json /app/
 RUN npm install
+COPY ./ /app/
+ARG configuration=production
+RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
-COPY . .
-RUN npm run build
-
-# ----------------------------
-# run with nginx
-# ----------------------------
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx
-
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d
-
-# Set the environment variable for the Gateway address
-ENV GATEWAY_URL http://localhost:8080
-
-COPY --from=build /app/dist/client /usr/share/nginx/html
-
-EXPOSE 80
+#Copy ci-dashboard-dist
+COPY --from=build-stage /app/dist/out/ /usr/share/nginx/html
+#Copy default nginx configuration
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf

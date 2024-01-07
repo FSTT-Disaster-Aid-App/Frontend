@@ -1,0 +1,62 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+        - name: demo-deployment-container
+          image: ayga/angluar-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GATEWAY_URL
+              value: "http://gateway-svc:8080"
+      imagePullSecrets:
+        - name: my-dockerhub-secret
+
+---
+# Internal Service (ClusterIP)
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: demo-app
+  name: demo-service
+spec:
+  type: ClusterIP
+  ports:
+    - name: demo-service-port
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: demo-app
+
+---
+# External NodePort Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: demo-app
+  name: demo-nodeport
+spec:
+  type: NodePort
+  ports:
+    - name: demo-service-port
+      port: 80
+      targetPort: 80
+      nodePort: 30001 # You can specify a different nodePort if needed
+      protocol: TCP
+  selector:
+    app: demo-app

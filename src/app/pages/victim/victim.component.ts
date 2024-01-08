@@ -5,6 +5,8 @@ import { Assistancerequest } from "../../interfaces/assistancerequest";
 import { environment } from "../../../environments/environment";
 
 import { AssistantrequestsService } from "../../services/victim/assistantrequests.service";
+import {SkillsService} from "../../services/victim/skills.service";
+import {Skills} from "../../interfaces/skills";
 
 @Component({
   selector: 'app-victim',
@@ -13,6 +15,7 @@ import { AssistantrequestsService } from "../../services/victim/assistantrequest
 })
 export class VictimComponent implements OnInit {
   assistanceRequests: Assistancerequest[] = [];
+  skills: Skills[] = [];
   private gatewayUrl = environment.gatewayUrl;
   private baseUrl = `${this.gatewayUrl}/victim/AssistantRequests`;
   showAddForm: boolean = false;
@@ -27,7 +30,7 @@ export class VictimComponent implements OnInit {
     description: '',
   };
 
-  constructor(private http: HttpClient, private assistantservice: AssistantrequestsService) {}
+  constructor(private http: HttpClient, private assistantservice: AssistantrequestsService,private skillsservice: SkillsService) {}
 
   ngOnInit(): void {
     this.getAllAssistanceRequests();
@@ -40,6 +43,16 @@ export class VictimComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching Assistance Requests:', error);
+      }
+    );
+  }
+  getAllSkills(): void {
+    this.skillsservice.getAllItems().subscribe(
+      (response) => {
+        this.skills = response.data;
+      },
+      (error) => {
+        console.error('Error fetching Skills:', error);
       }
     );
   }

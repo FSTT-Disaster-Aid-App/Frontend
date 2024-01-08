@@ -20,6 +20,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { SkillsComponent } from './pages/volunteer/skills/skills.component';
 import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/assistance-offers.component';
 import { AssistantDetailsComponent } from './pages/victim/assistant-details/assistant-details.component';
+import {GoogleMapsModule} from "@angular/google-maps";
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { AssistantDetailsComponent } from './pages/victim/assistant-details/assi
     ReactiveFormsModule,
     FontAwesomeModule,
     FormsModule,
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

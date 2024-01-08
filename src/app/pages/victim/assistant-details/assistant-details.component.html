@@ -18,6 +18,17 @@
             <label class="block text-sm font-medium text-gray-600">State:</label>
             <p class="text-lg text-green-500">{{ assistantRequestDetails.state }}</p>
         </div>
+      <!-- google-maps-demo.component.html -->
+      <google-map height="400px"
+                  width="750px"
+                  [center]="center"
+                  [zoom]="zoom"
+                  (mapClick)="moveMap($event)"
+                  (mapMousemove)="move($event)">
+      </google-map>
+
+      <div>Latitude: {{display?.lat}}</div>
+      <div>Longitude: {{display?.lng}}</div>
 
         <button
                 routerLink="/victim"
@@ -27,3 +38,4 @@
         </button>
     </div>
 </div>
+

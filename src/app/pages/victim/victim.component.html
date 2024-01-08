@@ -1,8 +1,11 @@
 <div class="flex flex-col space-y-4">
   <div class="text-center text-xl font-bold">Your Assistant Requests</div>
+  <button  (click)="showAddForm = true">Add Assistant Request +</button>
+
 
   <div class="container mx-auto">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Card for each assistance request -->
       <div *ngFor="let offer of assistanceRequests" class="card w-full bg-base-100 shadow-xl">
         <div class="card-body">
           <h1 class="text-xl"><span class="font-bold text-black">Description:</span></h1>
@@ -22,4 +25,21 @@
       </div>
     </div>
   </div>
+
+  <!-- Form for adding a new assistant request (conditionally shown) -->
+  <div class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center" *ngIf="showAddForm">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <!-- Your form content goes here -->
+        <h1 class="text-xl"><span class="font-bold text-black">Add Assistant Request</span></h1>
+
+        <button class="flex-shrink-0 bg-green-400 text-white rounded p-2 text-sm hover:bg-green-500" (click)="addAssistantRequest()">Add</button>
+        <!-- Button to close the form -->
+        <button class="flex-shrink-0 bg-gray-400 text-white rounded p-2 text-sm hover:bg-gray-500" (click)="showAddForm = false">Quit</button>
+      </div>
+    </div>
+  </div>
+
+
+
 </div>

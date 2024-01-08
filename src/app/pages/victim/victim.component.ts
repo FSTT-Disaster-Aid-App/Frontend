@@ -4,6 +4,7 @@ import { Assistancerequest } from "../../interfaces/assistancerequest";
 import { environment } from "../../../environments/environment";
 import {Observable, tap, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {AssistantrequestsService} from "../../services/victim/assistantrequests.service";
 
 @Component({
   selector: 'app-victim',
@@ -14,44 +15,29 @@ export class VictimComponent implements OnInit {
   assistanceRequests: Assistancerequest[] = [];
   private gatewayUrl = environment.gatewayUrl;
   private baseUrl = `${this.gatewayUrl}/victim/AssistantRequests`;
+  // Inside your VictimComponent class
+  showAddForm: boolean = false;
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient, private assistantservice: AssistantrequestsService) {}
 
   ngOnInit(): void {
     this.getAllAssistanceRequests();
   }
-
   getAllAssistanceRequests(): void {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      const requestOptions = { headers: headers };
-
-      this.http.get<{ data: Assistancerequest[] }>(`${this.baseUrl}`, requestOptions)
-        .subscribe(response => {
-            this.assistanceRequests = response.data;
-          },
-          error => {
-            console.error('Error fetching Assistance Requests:', error);
-          });
-    } else {
-      console.error('Token is missing');
-    }
+    this.assistantservice.getAllItems().subscribe(
+      (response) => {
+        this.assistanceRequests = response.data;
+      },
+      (error) => {
+        console.error('Error fetching Assistance Requests:', error);
+      }
+    );
   }
-  deleteItem(id: string | undefined): Observable<any> {
-    const token = localStorage.getItem('token');
-    if (token && id) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      const requestOptions = { headers: headers };
 
-      return this.http.delete<any>(`${this.baseUrl}/${id}`, requestOptions);
-    } else {
-      return new Observable<any>(observer => observer.error('Token or ID is missing'));
-    }
-  }
+
   deleteIte(id: string | undefined): void {
-    this.deleteItem(id).subscribe(
+    this.assistantservice.deleteItem(id).subscribe(
       () => {
         // Mettez à jour la liste des éléments après la suppression
         this.getAllAssistanceRequests();
@@ -61,6 +47,35 @@ export class VictimComponent implements OnInit {
       }
     );
   }
+
+  createAssistanceRequest(assistanceRequest: Assistancerequest): Observable<Assistancerequest> {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      const requestOptions = { headers: headers };
+
+      return this.http.post<Assistancerequest>(`${this.baseUrl}`, assistanceRequest, requestOptions)
+        .pipe(
+          catchError(error => {
+            console.error('Error creating Assistance Request:', error);
+            return throwError(error);
+          })
+        );
+    } else {
+      return throwError('Token is missing');
+    }
+  }
+  // Inside your VictimComponent class
+  addAssistantRequest(): void {
+    // Add logic to handle adding the information
+    // ...
+
+    // Close the form
+    this.showAddForm = false;
+  }
+
+
 
 
 }

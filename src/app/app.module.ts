@@ -19,6 +19,7 @@ import { VolunteerComponent } from './pages/volunteer/volunteer.component';
 import { AboutComponent } from './pages/about/about.component';
 import { SkillsComponent } from './pages/volunteer/skills/skills.component';
 import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/assistance-offers.component';
+import { AssistantDetailsComponent } from './pages/victim/assistant-details/assistant-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/a
     AboutComponent,
     SkillsComponent,
     AssistanceOffersComponent,
+    AssistantDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { VictimComponent } from './pages/victim/victim.component';
 import { VolunteerComponent } from './pages/volunteer/volunteer.component';
 import { SkillsComponent } from './pages/volunteer/skills/skills.component';
 import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/assistance-offers.component';
+import {AssistantDetailsComponent} from "./pages/victim/assistant-details/assistant-details.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path: 'victim',
     component: VictimComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'assistant-details/:id',
+    component: AssistantDetailsComponent,
     canActivate: [AuthGuardService],
   },
 ];

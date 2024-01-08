@@ -6,7 +6,7 @@ import {Location} from "./location";
 
 export interface Assistancerequest {
   id?: string;
-  state: string;
+  state: 'PENDING' | 'APPROVED' | 'REJECTED';
   date: Date;
   userId: string;
   skills: Skills[];

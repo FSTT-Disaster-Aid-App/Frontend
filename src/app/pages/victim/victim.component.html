@@ -1,7 +1,6 @@
 <div class="flex flex-col space-y-4">
   <div class="text-center text-xl font-bold">Your Assistant Requests</div>
-  <button  (click)="showAddForm = true">Add Assistant Request +</button>
-
+  <button (click)="showAddForm = true">Add Assistant Request +</button>
 
   <div class="container mx-auto">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -10,15 +9,10 @@
         <div class="card-body">
           <h1 class="text-xl"><span class="font-bold text-black">Description:</span></h1>
           <p class="card-title text-sm">{{ offer.description }}</p>
-
           <p class="card-title text-xl mb-2"><span class="font-bold text-black">State:</span><span class="text-green-500">{{ offer.state }}</span></p>
 
-          <!-- Boutons "Delete" et "See More" dans la même ligne -->
           <div class="flex items-center space-x-4">
-            <!-- Bouton Delete -->
             <button class="flex-shrink-0 bg-red-600 text-white rounded p-2 text-sm hover:bg-red-500" (click)="deleteIte(offer?.id)">Delete</button>
-
-            <!-- Bouton See More avec la classe shape-bg -->
             <button class="flex-shrink-0 shape-bg bg-blue-400 text-white rounded p-2 text-sm hover:bg-indigo-700">See More</button>
           </div>
         </div>
@@ -30,16 +24,19 @@
   <div class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center" *ngIf="showAddForm">
     <div class="card bg-base-100 shadow-xl">
       <div class="card-body">
-        <!-- Your form content goes here -->
         <h1 class="text-xl"><span class="font-bold text-black">Add Assistant Request</span></h1>
-        <!-- Add your form fields here -->
-        <button class="flex-shrink-0 bg-green-400 text-white rounded p-2 text-sm hover:bg-green-500" >Add</button>
-        <!-- Button to close the form -->
-        <button class="flex-shrink-0 bg-gray-400 text-white rounded p-2 text-sm hover:bg-gray-500" (click)="showAddForm = false">Quit</button>
+        <form (ngSubmit)="addAssistantRequest()" #addForm="ngForm">
+          <div class="mb-4">
+            <label for="description" class="block text-sm font-medium text-gray-700">Description:</label>
+            <textarea id="description" name="description" [(ngModel)]="newAssistanceRequest.description" class="form-input mt-1 block w-full rounded-md" required></textarea>
+          </div>
+
+          <!-- Add other form fields here -->
+
+          <button type="submit" class="flex-shrink-0 bg-green-400 text-white rounded p-2 text-sm hover:bg-green-500">Add</button>
+          <button type="button" class="flex-shrink-0 bg-gray-400 text-white rounded p-2 text-sm hover:bg-gray-500" (click)="showAddForm = false">Quit</button>
+        </form>
       </div>
     </div>
   </div>
-
-
-
 </div>

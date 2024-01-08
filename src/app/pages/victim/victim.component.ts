@@ -1,10 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Assistancerequest } from "../../interfaces/assistancerequest";
 import { environment } from "../../../environments/environment";
-import {Observable, tap, throwError} from "rxjs";
-import {catchError} from "rxjs/operators";
-import {AssistantrequestsService} from "../../services/victim/assistantrequests.service";
+
+import { AssistantrequestsService } from "../../services/victim/assistantrequests.service";
 
 @Component({
   selector: 'app-victim',
@@ -15,15 +15,24 @@ export class VictimComponent implements OnInit {
   assistanceRequests: Assistancerequest[] = [];
   private gatewayUrl = environment.gatewayUrl;
   private baseUrl = `${this.gatewayUrl}/victim/AssistantRequests`;
-  // Inside your VictimComponent class
   showAddForm: boolean = false;
-
+  newAssistanceRequest: Assistancerequest = {
+    id: undefined,  // add this line
+    state: 'PENDING',
+    date: new Date(),
+    userId: '',
+    skills: [],
+    aidType: [],
+    location: {id: '', rue: '', ville:''},  // Assuming Location has id and name properties
+    description: '',
+  };
 
   constructor(private http: HttpClient, private assistantservice: AssistantrequestsService) {}
 
   ngOnInit(): void {
     this.getAllAssistanceRequests();
   }
+
   getAllAssistanceRequests(): void {
     this.assistantservice.getAllItems().subscribe(
       (response) => {
@@ -35,11 +44,9 @@ export class VictimComponent implements OnInit {
     );
   }
 
-
   deleteIte(id: string | undefined): void {
     this.assistantservice.deleteItem(id).subscribe(
       () => {
-        // Mettez à jour la liste des éléments après la suppression
         this.getAllAssistanceRequests();
       },
       error => {
@@ -48,40 +55,29 @@ export class VictimComponent implements OnInit {
     );
   }
 
-  createAssistanceRequest(assistanceRequest: Assistancerequest): Observable<Assistancerequest> {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      const requestOptions = { headers: headers };
-
-      return this.http.post<Assistancerequest>(`${this.baseUrl}`, assistanceRequest, requestOptions)
-        .pipe(
-          catchError(error => {
-            console.error('Error creating Assistance Request:', error);
-            return throwError(error);
-          })
-        );
-    } else {
-      return throwError('Token is missing');
-    }
-  }
-
-  addAssistantRequest(assistanceRequest: Assistancerequest): void {
-    this.assistantservice.postItem(assistanceRequest).subscribe(
+  addAssistantRequest(): void {
+    this.assistantservice.postItem(this.newAssistanceRequest).subscribe(
       (response) => {
         console.log('Assistance Request added successfully:', response);
-        this.getAllAssistanceRequests(); // Refresh the list after adding
-        this.showAddForm = false; // Close the form
+        this.getAllAssistanceRequests();
+        this.showAddForm = false;
+        // Reset the form fields
+        this.newAssistanceRequest = {
+          id: undefined,
+          state: 'PENDING',
+          date: new Date(),
+          userId: '',
+          skills: [],
+          aidType: [],
+          location: {id: '', rue: '', ville:''},
+          description: '',
+        };
       },
       (error) => {
         console.error('Error adding Assistance Request:', error);
+        // Log the error message received from the server
+        console.error('Server error:', error.error);
       }
     );
   }
-
-
-
-
-
 }

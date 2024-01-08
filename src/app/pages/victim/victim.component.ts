@@ -66,14 +66,20 @@ export class VictimComponent implements OnInit {
       return throwError('Token is missing');
     }
   }
-  // Inside your VictimComponent class
-  addAssistantRequest(): void {
-    // Add logic to handle adding the information
-    // ...
 
-    // Close the form
-    this.showAddForm = false;
+  addAssistantRequest(assistanceRequest: Assistancerequest): void {
+    this.assistantservice.postItem(assistanceRequest).subscribe(
+      (response) => {
+        console.log('Assistance Request added successfully:', response);
+        this.getAllAssistanceRequests(); // Refresh the list after adding
+        this.showAddForm = false; // Close the form
+      },
+      (error) => {
+        console.error('Error adding Assistance Request:', error);
+      }
+    );
   }
+
 
 
 

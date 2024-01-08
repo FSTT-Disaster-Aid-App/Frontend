@@ -54,6 +54,19 @@ export class AssistantrequestsService {
       );
     }
   }
+  getAssistantRequestById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      const requestOptions = { headers: headers };
+
+      return this.http.get<any>(`${this.baseUrl}/${id}`, requestOptions);
+    } else {
+      return new Observable<any>((observer) =>
+        observer.error('Token is missing')
+      );
+    }
+  }
 
   updateItem(id: string, assistanceRequest: Assistancerequest): Observable<Assistancerequest> {
     const token = localStorage.getItem('token');

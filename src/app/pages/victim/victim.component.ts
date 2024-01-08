@@ -7,6 +7,8 @@ import { environment } from "../../../environments/environment";
 import { AssistantrequestsService } from "../../services/victim/assistantrequests.service";
 import {SkillsService} from "../../services/victim/skills.service";
 import {Skills} from "../../interfaces/skills";
+import {AitypeService} from "../../services/victim/aitype.service";
+import {Aidtype} from "../../interfaces/aidtype";
 
 @Component({
   selector: 'app-victim',
@@ -16,6 +18,7 @@ import {Skills} from "../../interfaces/skills";
 export class VictimComponent implements OnInit {
   assistanceRequests: Assistancerequest[] = [];
   skills: Skills[] = [];
+  aidtype: Aidtype[] = [];
   private gatewayUrl = environment.gatewayUrl;
   private baseUrl = `${this.gatewayUrl}/victim/AssistantRequests`;
   showAddForm: boolean = false;
@@ -30,7 +33,7 @@ export class VictimComponent implements OnInit {
     description: '',
   };
 
-  constructor(private http: HttpClient, private assistantservice: AssistantrequestsService,private skillsservice: SkillsService) {}
+  constructor(private http: HttpClient, private assistantservice: AssistantrequestsService,private skillsservice: SkillsService,private aidtypesrvc:AitypeService) {}
 
   ngOnInit(): void {
     this.getAllAssistanceRequests();
@@ -50,6 +53,16 @@ export class VictimComponent implements OnInit {
     this.skillsservice.getAllItems().subscribe(
       (response) => {
         this.skills = response.data;
+      },
+      (error) => {
+        console.error('Error fetching Skills:', error);
+      }
+    );
+  }
+  getAllAidtype(): void {
+    this.aidtypesrvc.getAllItems().subscribe(
+      (response) => {
+        this.aidtype= response.data;
       },
       (error) => {
         console.error('Error fetching Skills:', error);

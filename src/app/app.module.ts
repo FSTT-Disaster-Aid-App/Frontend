@@ -19,6 +19,9 @@ import { VolunteerComponent } from './pages/volunteer/volunteer.component';
 import { AboutComponent } from './pages/about/about.component';
 import { SkillsComponent } from './pages/volunteer/skills/skills.component';
 import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/assistance-offers.component';
+import { MakeAssistanceOfferComponent } from './pages/volunteer/make-assistance-offer/make-assistance-offer.component';
+import { AssistanceRequestsComponent } from './pages/volunteer/assistance-requests/assistance-requests.component';
+import { AssistanceRequestsSeemoreComponent } from './pages/volunteer/assistance-requests-seemore/assistance-requests-seemore.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +39,9 @@ import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/a
     AboutComponent,
     SkillsComponent,
     AssistanceOffersComponent,
+    MakeAssistanceOfferComponent,
+    AssistanceRequestsComponent,
+    AssistanceRequestsSeemoreComponent,
   ],
   imports: [
     BrowserModule,

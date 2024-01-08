@@ -9,6 +9,8 @@ import { VictimComponent } from './pages/victim/victim.component';
 import { VolunteerComponent } from './pages/volunteer/volunteer.component';
 import { SkillsComponent } from './pages/volunteer/skills/skills.component';
 import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/assistance-offers.component';
+import { MakeAssistanceOfferComponent } from './pages/volunteer/make-assistance-offer/make-assistance-offer.component';
+import { AssistanceRequestsComponent } from './pages/volunteer/assistance-requests/assistance-requests.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -28,6 +30,16 @@ const routes: Routes = [
       {
         path: 'assistance-offers',
         component: AssistanceOffersComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'make-assistance-offer',
+        component: MakeAssistanceOfferComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: '',
+        component: AssistanceRequestsComponent,
         canActivate: [AuthGuardService],
       },
     ],

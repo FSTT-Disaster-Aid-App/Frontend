@@ -5,36 +5,47 @@
   </div>
 
   <!-- Display Skills -->
-  <div class="mt-8">
+  <div class="mt-8 flex flex-col w-full justify-center items-center">
     <h2 class="font-bold text-lg mb-4">All Skills</h2>
-    <ul class="list-disc list-inside">
-      <li *ngFor="let skill of skills">
-        {{ skill.name }}
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white border border-gray-300 rounded-md">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="py-2 px-4 border-b">Skill Name</th>
+            <th class="py-2 px-4 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let skill of skills">
+            <td class="py-2 px-4 border-b">{{ skill.name }}</td>
+            <td class="py-2 px-4 border-b">
+              <button
+                class="px-2 py-1 bg-red-500 text-white rounded"
+                (click)="deleteSkill(skill.id)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Add New Skill -->
+    <div class="mt-8">
+      <h2 class="font-bold text-lg mb-4">Add New Skill</h2>
+      <form [formGroup]="newSkillForm" class="flex items-center gap-4">
+        <input
+          formControlName="name"
+          placeholder="Enter skill name"
+          class="border-2 border-primary px-2 py-1 rounded"
+        />
         <button
-          class="ml-2 px-2 py-1 bg-red-500 text-white rounded"
-          (click)="deleteSkill(skill.id)"
+          class="px-4 py-2 bg-primary text-white rounded"
+          (click)="addSkill()"
         >
-          Delete
+          Add Skill
         </button>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Add New Skill -->
-  <div class="mt-8">
-    <h2 class="font-bold text-lg mb-4">Add New Skill</h2>
-    <div class="flex items-center gap-4">
-      <input
-        formControlName="name"
-        placeholder="Enter skill name"
-        class="border-2 border-primary px-2 py-1 rounded"
-      />
-      <button
-        class="px-4 py-2 bg-primary text-white rounded"
-        (click)="addSkill()"
-      >
-        Add Skill
-      </button>
+      </form>
     </div>
   </div>
 </div>

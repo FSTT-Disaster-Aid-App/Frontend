@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
@@ -17,7 +17,8 @@ interface Skill {
 export class SkillsComponent implements OnInit {
   skills: Skill[] = [];
   newSkillForm!: FormGroup;
-  userId: number | undefined;
+  userId!: string;
+  requestOptions = { headers: new HttpHeaders({}) };
 
   constructor(
     private http: HttpClient,
@@ -25,8 +26,14 @@ export class SkillsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const storedUserId = localStorage.getItem('userId');
-    this.userId = Number(storedUserId);
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.requestOptions = { headers: headers };
+    if (userId) {
+      this.userId = userId;
+    }
+
     this.loadSkills();
     this.newSkillForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -38,9 +45,12 @@ export class SkillsComponent implements OnInit {
     const gatewayUrl = environment.gatewayUrl;
 
     this.http
-      .get<any[]>(`${gatewayUrl}/api/volunteer/skills/user/${this.userId}`)
-      .subscribe((skills) => {
-        this.skills = skills;
+      .get<{ data: Skill[] }>(
+        `${gatewayUrl}/volunteer/skills/user/${this.userId}`,
+        this.requestOptions,
+      )
+      .subscribe((response) => {
+        this.skills = response.data;
       });
   }
 
@@ -48,11 +58,16 @@ export class SkillsComponent implements OnInit {
     const gatewayUrl = environment.gatewayUrl;
 
     this.http
-      .post(`${gatewayUrl}/api/volunteer/skills`, this.newSkillForm.value)
+      .post<Skill>(
+        `${gatewayUrl}/volunteer/skills`,
+        this.newSkillForm.value,
+        this.requestOptions,
+      )
       .subscribe({
         next: () => {
           this.loadSkills();
           this.newSkillForm.reset();
+          console.log('Skill added successfully');
         },
         error: (error) => {
           alert(error.error.message);
@@ -65,7 +80,10 @@ export class SkillsComponent implements OnInit {
       const gatewayUrl = environment.gatewayUrl;
 
       this.http
-        .delete(`${gatewayUrl}/api/volunteer/skills/${skillId}`)
+        .delete(
+          `${gatewayUrl}/volunteer/skills/${skillId}`,
+          this.requestOptions,
+        )
         .subscribe({
           next: () => {
             this.loadSkills();

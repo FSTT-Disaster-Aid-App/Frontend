@@ -49,26 +49,7 @@ export class VictimComponent implements OnInit {
       }
     );
   }
-  getAllSkills(): void {
-    this.skillsservice.getAllItems().subscribe(
-      (response) => {
-        this.skills = response.data;
-      },
-      (error) => {
-        console.error('Error fetching Skills:', error);
-      }
-    );
-  }
-  getAllAidtype(): void {
-    this.aidtypesrvc.getAllItems().subscribe(
-      (response) => {
-        this.aidtype= response.data;
-      },
-      (error) => {
-        console.error('Error fetching Skills:', error);
-      }
-    );
-  }
+
 
   deleteIte(id: string | undefined): void {
     this.assistantservice.deleteItem(id).subscribe(

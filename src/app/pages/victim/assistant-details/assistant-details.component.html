@@ -1,0 +1,29 @@
+<!-- assistant-details.component.html -->
+
+<div class="container mx-auto mt-8">
+    <div class="max-w-3xl mx-auto bg-white shadow-md rounded-md p-6">
+        <h1 class="text-2xl font-bold mb-4">Assistant Request Details</h1>
+
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-600">id:</label>
+            <p class="text-lg text-gray-800">{{ assistantRequestDetails.id }}</p>
+        </div>
+
+
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-600">Description:</label>
+            <p class="text-lg text-gray-800">{{ assistantRequestDetails.description }}</p>
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-600">State:</label>
+            <p class="text-lg text-green-500">{{ assistantRequestDetails.state }}</p>
+        </div>
+
+        <button
+                routerLink="/victim"
+        class="bg-gray-400 text-white rounded p-2 text-sm hover:bg-gray-500"
+        >
+        Back to List
+        </button>
+    </div>
+</div>

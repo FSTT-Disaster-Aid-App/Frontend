@@ -13,19 +13,20 @@ export class AssistantrequestsService {
 
   constructor(private http: HttpClient) {}
 
-  getAllItems(): Observable<{ data: Assistancerequest[] }> {
+  getAllItems(userId:string): Observable<{ data: Assistancerequest[] }> {
     const token = localStorage.getItem('token');
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       const requestOptions = { headers: headers };
 
-      return this.http.get<{ data: Assistancerequest[] }>(this.baseUrl, requestOptions);
+      return this.http.get<{ data: Assistancerequest[] }>(`${this.baseUrl}/user/${userId}`, requestOptions);
     } else {
       return new Observable<{ data: Assistancerequest[] }>((observer) =>
-        observer.error('Token is missing')
+          observer.error('Token is missing')
       );
     }
   }
+
 
   deleteItem(id: string | undefined): Observable<any> {
     const token = localStorage.getItem('token');

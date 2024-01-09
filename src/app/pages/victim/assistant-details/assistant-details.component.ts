@@ -55,16 +55,7 @@ export class AssistantDetailsComponent implements OnInit{
       }
     );
   }
-  getAllAssistanceRequests(): void {
-    this.assistantservice.getAllItems().subscribe(
-      (response) => {
-        this.assistanceRequests = response.data;
-      },
-      (error) => {
-        console.error('Error fetching Assistance Requests:', error);
-      }
-    );
-  }
+
   getAllSkills(): void {
     this.skillsservice.getAllItems().subscribe(
       (response) => {

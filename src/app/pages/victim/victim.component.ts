@@ -35,26 +35,42 @@ export class VictimComponent implements OnInit {
 
   constructor(private http: HttpClient, private assistantservice: AssistantrequestsService,private skillsservice: SkillsService,private aidtypesrvc:AitypeService) {}
 
-  ngOnInit(): void {
-    this.getAllAssistanceRequests();
+
+    ngOnInit(): void {
+    const userId = localStorage.getItem('userId');
+
+      if (userId) {
+        this.getAllAssistantRequests();
+      } else {
+        console.error('User ID is missing in localStorage');
+      }
+
+  }
+  getAllAssistantRequests(): void {
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+      console.log( localStorage.getItem('userId'));
+      this.assistantservice.getAllItems(userId).subscribe(
+          (response) => {
+            this.assistanceRequests = response.data;
+          },
+          (error) => {
+            console.error('Error fetching Assistance Requests:', error);
+          }
+      );
+    } else {
+      console.error('User ID is missing in localStorage');
+    }
   }
 
-  getAllAssistanceRequests(): void {
-    this.assistantservice.getAllItems().subscribe(
-      (response) => {
-        this.assistanceRequests = response.data;
-      },
-      (error) => {
-        console.error('Error fetching Assistance Requests:', error);
-      }
-    );
-  }
+
 
 
   deleteIte(id: string | undefined): void {
     this.assistantservice.deleteItem(id).subscribe(
       () => {
-        this.getAllAssistanceRequests();
+        this.getAllAssistantRequests();
       },
       error => {
         console.error('Error deleting item:', error);
@@ -66,7 +82,7 @@ export class VictimComponent implements OnInit {
     this.assistantservice.postItem(this.newAssistanceRequest).subscribe(
       (response) => {
         console.log('Assistance Request added successfully:', response);
-        this.getAllAssistanceRequests();
+        this.getAllAssistantRequests();
         this.showAddForm = false;
         // Reset the form fields
         this.newAssistanceRequest = {

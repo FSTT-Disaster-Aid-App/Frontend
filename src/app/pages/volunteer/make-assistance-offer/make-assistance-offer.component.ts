@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Removed FormArray import
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssistanceOffer } from 'src/app/interfaces/assistanceoffer';
 import { environment } from 'src/environments/environment';
 
@@ -12,16 +12,21 @@ import { environment } from 'src/environments/environment';
 })
 export class MakeAssistanceOfferComponent implements OnInit {
   assistanceForm!: FormGroup;
+  requestId: string | null | undefined;
 
   // Inject necessary services
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     // Initialize the form on component initialization
+    this.route.paramMap.subscribe((params) => {
+      this.requestId = params.get('requestId');
+    });
     this.initializeForm();
   }
 
@@ -53,13 +58,12 @@ export class MakeAssistanceOfferComponent implements OnInit {
     // Construct the request payload
     const requestPayload = {
       userId: userId,
-      assistanceRequestId: 'dbe597da-01eb-4a16-9965-5409daaa7b42',
+      assistanceRequestId: this.requestId,
       aidTypes: [{ name: formData.aidTypes }],
       donations: [{ donationDescription: formData.donations }],
       dateOfferMade: this.getCurrentDate(),
       dateOfferAcceptedOrRejected: null,
     };
-    console.log(requestPayload);
 
     // Send the POST request to the server
     this.http
@@ -71,6 +75,8 @@ export class MakeAssistanceOfferComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log('Assistance request submitted successfully');
+          // redirect to volunteer page
+          this.router.navigate(['/volunteer']);
         },
         error: (error) => {
           alert(error.error.message);

@@ -1,7 +1,18 @@
-<div class="h-screen w-full">
+<div class="">
   <div class="flex justify-center items-center gap-4">
-    <a href="/volunteer/skills" class="text-2xl font-bold">my skills</a>
-    <a href="/volunteer/" class="text-2xl font-bold"> requests</a>
+    <a
+      routerLink="/volunteer/skills"
+      routerLinkActive="text-primary"
+      class="text-2xl font-bold"
+      >My skills</a
+    >
+    <a
+      routerLink="/volunteer/offers"
+      routerLinkActive="text-primary"
+      class="text-2xl font-bold"
+    >
+      My offers</a
+    >
   </div>
   <router-outlet></router-outlet>
 </div>

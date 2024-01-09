@@ -79,28 +79,43 @@ export class VictimComponent implements OnInit {
   }
 
   addAssistantRequest(): void {
+    // Récupérer l'ID de l'utilisateur à partir du localStorage
+    const userId = localStorage.getItem('userId');
+
+    // Vérifier si l'ID de l'utilisateur est présent
+    if (!userId) {
+      console.error('User ID is missing in localStorage');
+      return;
+    }
+
+    // Assigner l'ID de l'utilisateur à la nouvelle demande d'assistance
+    this.newAssistanceRequest.userId = userId;
+
+    // Envoi de la requête
     this.assistantservice.postItem(this.newAssistanceRequest).subscribe(
-      (response) => {
-        console.log('Assistance Request added successfully:', response);
-        this.getAllAssistantRequests();
-        this.showAddForm = false;
-        // Reset the form fields
-        this.newAssistanceRequest = {
-          id: undefined,
-          state: 'PENDING',
-          date: new Date(),
-          userId: '',
-          skills: [],
-          aidType: [],
-          location: {id: '', rue: '', ville:''},
-          description: '',
-        };
-      },
-      (error) => {
-        console.error('Error adding Assistance Request:', error);
-        // Log the error message received from the server
-        console.error('Server error:', error.error);
-      }
+        (response) => {
+          console.log('Assistance Request added successfully:', response);
+          this.getAllAssistantRequests();
+          this.showAddForm = false;
+
+          // Réinitialiser les champs du formulaire
+          this.newAssistanceRequest = {
+            id: undefined,
+            state: 'PENDING',
+            date: new Date(),
+            userId: '',
+            skills: [],
+            aidType: [],
+            location: { id: '', rue: '', ville: '' },
+            description: '',
+          };
+        },
+        (error) => {
+          console.error('Error adding Assistance Request:', error);
+          // Log the error message received from the server
+          console.error('Server error:', error.error);
+        }
     );
   }
+
 }

@@ -1,0 +1,35 @@
+<div class="container md:px-56 mx-auto">
+  <form
+    [formGroup]="assistanceForm"
+    (ngSubmit)="submitAssistanceRequest()"
+    class="card-body"
+  >
+    <div class="form-control">
+      <label class="label" for="aidTypes">
+        <span class="label-text text-neutral">Aid Types</span>
+      </label>
+      <select formControlName="aidTypes" class="input input-bordered">
+        <option value="Financial Assistance">Financial Assistance</option>
+        <option value="Food Donation">Food Donation</option>
+      </select>
+    </div>
+
+    <div class="form-control">
+      <label class="label" for="donations">
+        <span class="label-text text-neutral">Donations</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Donations"
+        formControlName="donations"
+        class="input input-bordered"
+      />
+    </div>
+
+    <div class="form-control flex gap-2">
+      <button class="btn btn-primary text-white" type="submit">
+        Submit Request
+      </button>
+    </div>
+  </form>
+</div>

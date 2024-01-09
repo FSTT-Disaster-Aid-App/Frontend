@@ -1,0 +1,35 @@
+<div class="flex flex-col space-y-4">
+  <div class="container mx-auto">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+    >
+      <div
+        *ngFor="let offer of assistanceRequests"
+        class="card w-full bg-base-100 shadow-xl"
+      >
+        <div class="card-body">
+          <h1 class="text-xl">
+            <span class="font-bold text-black">Description:</span>
+          </h1>
+          <p class="card-title text-sm">{{ offer.description }}</p>
+
+          <div class="flex items-center space-x-4">
+            <button
+              class="flex-shrink-0 bg-green-600 text-white rounded p-2 text-sm hover:bg-red-500"
+              (click)="makeOfer(offer?.id)"
+            >
+              make offer
+            </button>
+
+            <!-- Bouton See More avec la classe shape-bg -->
+            <button
+              class="flex-shrink-0 shape-bg bg-blue-400 text-white rounded p-2 text-sm hover:bg-indigo-700"
+            >
+              See More
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

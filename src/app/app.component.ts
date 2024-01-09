@@ -11,7 +11,6 @@ export class AppComponent {
   constructor(private route: Router) {}
 
   notLogInOrSignUp(): boolean {
-    console.log(this.route.url);
     return this.route.url !== '/login' && this.route.url !== '/signup';
   }
 }

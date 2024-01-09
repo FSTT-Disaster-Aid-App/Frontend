@@ -1,16 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-
-interface AssistanceOffer {
-  id?: string;
-  assistanceRequestId: string;
-  userId: string;
-  status: string;
-  dateOfferMade: string;
-  dateOfferAcceptedOrRejected: string;
-}
-
+import { AssistanceOffer } from 'src/app/interfaces/assistanceoffer';
 @Component({
   selector: 'app-assistance-offers',
   templateUrl: './assistance-offers.component.html',
@@ -18,28 +9,40 @@ interface AssistanceOffer {
 })
 export class AssistanceOffersComponent implements OnInit {
   assistanceOffers: AssistanceOffer[] = [];
-  userId: number | undefined;
+  userId: string | null | undefined;
+  requestOptions: { headers: HttpHeaders } | undefined;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    const token = localStorage.getItem('token');
+
+    // Set headers with Authorization token
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.requestOptions = { headers: headers };
+
     // Fetch userId from localStorage
-    this.userId = Number(localStorage.getItem('userId'));
+    this.userId = localStorage.getItem('userId');
 
     if (this.userId) {
       this.loadAssistanceOffers(this.userId);
     }
   }
 
-  loadAssistanceOffers(userId: number): void {
+  loadAssistanceOffers(userId: string): void {
     const gatewayUrl = environment.gatewayUrl;
-
     this.http
-      .get<AssistanceOffer[]>(
-        `${gatewayUrl}/api/volunteer/assistanceoffers/user/${userId}`,
+      .get<{ data: AssistanceOffer[] }>(
+        `${gatewayUrl}/volunteer/assistanceoffers/user/${userId}`,
+        this.requestOptions,
       )
-      .subscribe((assistanceOffers) => {
-        this.assistanceOffers = assistanceOffers;
+      .subscribe({
+        next: (res) => {
+          this.assistanceOffers = res.data;
+        },
+        error: (err) => {
+          alert(err);
+        },
       });
   }
 }

@@ -28,12 +28,12 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'assistance-offers',
+        path: 'offers',
         component: AssistanceOffersComponent,
         canActivate: [AuthGuardService],
       },
       {
-        path: 'make-assistance-offer',
+        path: 'make-assistance-offer/:requestId',
         component: MakeAssistanceOfferComponent,
         canActivate: [AuthGuardService],
       },

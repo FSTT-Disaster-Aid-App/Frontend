@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AssistanceOffer } from 'src/app/interfaces/assistanceoffer';
 import { Assistancerequest } from 'src/app/interfaces/assistancerequest';
 import { environment } from 'src/environments/environment';
 
@@ -8,8 +9,9 @@ import { environment } from 'src/environments/environment';
   templateUrl: './assistance-requests.component.html',
   styleUrls: ['./assistance-requests.component.scss'],
 })
-export class AssistanceRequestsComponent {
+export class AssistanceRequestsComponent implements OnInit {
   assistanceRequests: Assistancerequest[] = [];
+  assistanceOffers: AssistanceOffer[] | undefined;
   private gatewayUrl = environment.gatewayUrl;
   private baseUrl = `${this.gatewayUrl}/victim/AssistantRequests`;
 
@@ -21,26 +23,60 @@ export class AssistanceRequestsComponent {
 
   getAllAssistanceRequests(): void {
     const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
 
-    if (token) {
+    if (token && userId) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       const requestOptions = { headers: headers };
 
+      // Fetch Assistance Requests
       this.http
         .get<{ data: Assistancerequest[] }>(`${this.baseUrl}`, requestOptions)
-        .subscribe(
-          (response) => {
-            this.assistanceRequests = response.data;
+        .subscribe({
+          next: (response) => {
+            // Fetch Assistance Offers for the user
+            this.http
+              .get<{ data: AssistanceOffer[] }>(
+                `${this.gatewayUrl}/volunteer/assistanceoffers/user/${userId}`,
+                requestOptions,
+              )
+              .subscribe({
+                next: (res) => {
+                  this.assistanceOffers = res.data;
+                  this.filterAssistanceRequests(response.data);
+                },
+                error: (err) => {
+                  console.error('Error fetching Assistance Offers:', err);
+                },
+              });
           },
-          (error) => {
+          error: (error) => {
             console.error('Error fetching Assistance Requests:', error);
           },
-        );
+        });
     } else {
-      console.error('Token is missing');
+      console.error('Token or userId is missing');
     }
   }
+
+  filterAssistanceRequests(assistanceRequests: Assistancerequest[]): void {
+    if (this.assistanceOffers) {
+      assistanceRequests.forEach((assistanceRequest) => {
+        if (
+          !this.assistanceOffers?.some(
+            (offer: AssistanceOffer) =>
+              offer.assistanceRequestId === assistanceRequest.id,
+          )
+        ) {
+          this.assistanceRequests.push(assistanceRequest);
+        }
+      });
+    } else {
+      this.assistanceRequests = assistanceRequests;
+    }
+  }
+
   makeOfer(id: string | undefined): void {
-    console.log('clicked');
+    console.log('Make Offer clicked for ID:', id);
   }
 }

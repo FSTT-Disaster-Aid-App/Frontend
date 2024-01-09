@@ -51,24 +51,22 @@ export class AuthGuardService {
 
   private isAuthenticated(): Observable<boolean> {
     const gatewayUrl = environment.gatewayUrl;
-    console.log(gatewayUrl);
-    return of(true);
-    // const authToken = localStorage.getItem('token');
-    //
-    // if (!authToken) {
-    //   return of(false);
-    // }
-    //
-    // // Append the authentication endpoint to the gateway URL
-    // const authEndpoint = `${gatewayUrl}/auth/validate?token=${authToken}`;
-    //
-    // return this.http.get<Response>(authEndpoint).pipe(
-    //   map((response) => response.status === 'success'),
-    //   catchError((error) => {
-    //     // Log the error or show a more user-friendly message
-    //     console.error('An error occurred during authentication check.', error);
-    //     return of(true); // Assume authenticated to prevent blocking the user
-    //   }),
-    // );
+    const authToken = localStorage.getItem('token');
+
+    if (!authToken) {
+      return of(false);
+    }
+
+    // Append the authentication endpoint to the gateway URL
+    const authEndpoint = `${gatewayUrl}/auth/validate?token=${authToken}`;
+
+    return this.http.get<Response>(authEndpoint).pipe(
+      map((response) => response.status === 'success'),
+      catchError((error) => {
+        // Log the error or show a more user-friendly message
+        console.error('An error occurred during authentication check.', error);
+        return of(true); // Assume authenticated to prevent blocking the user
+      }),
+    );
   }
 }

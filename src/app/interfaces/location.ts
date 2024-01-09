@@ -1,6 +1,6 @@
 export interface Location {
   id?: string;
-  rue:string;
-  ville:string;
-
+  address: string;
+  city: string;
+  street: string;
 }

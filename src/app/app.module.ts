@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -20,7 +20,9 @@ import { AboutComponent } from './pages/about/about.component';
 import { SkillsComponent } from './pages/volunteer/skills/skills.component';
 import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/assistance-offers.component';
 import { AssistantDetailsComponent } from './pages/victim/assistant-details/assistant-details.component';
-import {GoogleMapsModule} from "@angular/google-maps";
+import { GoogleMapsModule } from '@angular/google-maps';
+import { AssistanceRequestsModule } from './pages/volunteer/assistance-requests/assistance-requests.module';
+import { MakeAssistanceOfferModule } from './pages/volunteer/make-assistance-offer/make-assistance-offer.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +49,9 @@ import {GoogleMapsModule} from "@angular/google-maps";
     ReactiveFormsModule,
     FontAwesomeModule,
     FormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    AssistanceRequestsModule,
+    MakeAssistanceOfferModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

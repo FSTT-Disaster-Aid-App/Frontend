@@ -9,7 +9,9 @@ import { VictimComponent } from './pages/victim/victim.component';
 import { VolunteerComponent } from './pages/volunteer/volunteer.component';
 import { SkillsComponent } from './pages/volunteer/skills/skills.component';
 import { AssistanceOffersComponent } from './pages/volunteer/assistance-offers/assistance-offers.component';
-import {AssistantDetailsComponent} from "./pages/victim/assistant-details/assistant-details.component";
+import { MakeAssistanceOfferComponent } from './pages/volunteer/make-assistance-offer/make-assistance-offer.component';
+import { AssistanceRequestsComponent } from './pages/volunteer/assistance-requests/assistance-requests.component';
+import { AssistantDetailsComponent } from './pages/victim/assistant-details/assistant-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,21 +29,33 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'assistance-offers',
+        path: 'offers',
         component: AssistanceOffersComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'make-assistance-offer/:requestId',
+        component: MakeAssistanceOfferComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: '',
+        component: AssistanceRequestsComponent,
         canActivate: [AuthGuardService],
       },
     ],
   },
   {
+    path: 'victim/assistant-details/:id',
+    component: AssistantDetailsComponent,
+    canActivate: [AuthGuardService],
+  },
+
+  {
     path: 'victim',
     component: VictimComponent,
     canActivate: [AuthGuardService],
-  },
-  {
-    path: 'assistant-details/:id',
-    component: AssistantDetailsComponent,
-    canActivate: [AuthGuardService],
+    children: [],
   },
 ];
 

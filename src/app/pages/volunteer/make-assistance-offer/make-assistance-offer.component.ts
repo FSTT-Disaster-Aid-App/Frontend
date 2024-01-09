@@ -40,6 +40,7 @@ export class MakeAssistanceOfferComponent implements OnInit {
 
   // Method to submit the assistance request
   submitAssistanceRequest(): void {
+    console.log('Submit assistance request clicked');
     // Get the token from local storage
     const token = localStorage.getItem('token');
 

@@ -1,4 +1,7 @@
-<div class="container md:px-56 mx-auto">
+<div class="container h-screen md:px-56 mx-auto">
+  <h1 class="card-title text-indigo-900 text-center my-4 text-3xl">
+    Assistance Form
+  </h1>
   <form
     [formGroup]="assistanceForm"
     (ngSubmit)="submitAssistanceRequest()"
@@ -9,8 +12,13 @@
         <span class="label-text text-neutral">Aid Types</span>
       </label>
       <select formControlName="aidTypes" class="input input-bordered">
-        <option value="Financial Assistance">Financial Assistance</option>
-        <option value="Food Donation">Food Donation</option>
+        <option value="Financial Aid">Financial Aid</option>
+        <option value="Food Donation">Food Distribution</option>
+        <option value="Search and Rescue">Search and Rescue</option>
+        <option value="Medical Supplies">Medical Supplies</option>
+        <option value="Food Supplies">Food Supplies</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Shelter">Shelter</option>
       </select>
     </div>
 

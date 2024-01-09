@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { AssistanceOffer } from 'src/app/interfaces/assistanceoffer';
 import { Assistancerequest } from 'src/app/interfaces/assistancerequest';
 import { environment } from 'src/environments/environment';
@@ -35,20 +35,22 @@ export class AssistanceRequestsComponent implements OnInit {
         .subscribe({
           next: (response) => {
             // Fetch Assistance Offers for the user
-            this.http
-              .get<{ data: AssistanceOffer[] }>(
-                `${this.gatewayUrl}/volunteer/assistanceoffers/user/${userId}`,
-                requestOptions,
-              )
-              .subscribe({
-                next: (res) => {
-                  this.assistanceOffers = res.data;
-                  this.filterAssistanceRequests(response.data);
-                },
-                error: (err) => {
-                  console.error('Error fetching Assistance Offers:', err);
-                },
-              });
+            this.assistanceRequests = response.data;
+            console.log(this.assistanceRequests);
+            // this.http
+            //   .get<{ data: AssistanceOffer[] }>(
+            //     `${this.gatewayUrl}/volunteer/assistanceoffers/user/${userId}`,
+            //     requestOptions,
+            //   )
+            //   .subscribe({
+            //     next: (res) => {
+            //       this.assistanceOffers = res.data;
+            //       // this.filterAssistanceRequests(response.data);
+            //     },
+            //     error: (err) => {
+            //       console.error('Error fetching Assistance Offers:', err);
+            //     },
+            //   });
           },
           error: (error) => {
             console.error('Error fetching Assistance Requests:', error);
@@ -59,24 +61,20 @@ export class AssistanceRequestsComponent implements OnInit {
     }
   }
 
-  filterAssistanceRequests(assistanceRequests: Assistancerequest[]): void {
-    if (this.assistanceOffers) {
-      assistanceRequests.forEach((assistanceRequest) => {
-        if (
-          !this.assistanceOffers?.some(
-            (offer: AssistanceOffer) =>
-              offer.assistanceRequestId === assistanceRequest.id,
-          )
-        ) {
-          this.assistanceRequests.push(assistanceRequest);
-        }
-      });
-    } else {
-      this.assistanceRequests = assistanceRequests;
-    }
-  }
-
-  makeOfer(id: string | undefined): void {
-    console.log('Make Offer clicked for ID:', id);
-  }
+  // filterAssistanceRequests(assistanceRequests: Assistancerequest[]): void {
+  //   if (this.assistanceOffers) {
+  //     assistanceRequests.forEach((assistanceRequest) => {
+  //       if (
+  //         !this.assistanceOffers?.some(
+  //           (offer: AssistanceOffer) =>
+  //             offer.assistanceRequestId === assistanceRequest.id,
+  //         )
+  //       ) {
+  //         this.assistanceRequests.push(assistanceRequest);
+  //       }
+  //     });
+  //   } else {
+  //     this.assistanceRequests = assistanceRequests;
+  //   }
+  // }
 }
